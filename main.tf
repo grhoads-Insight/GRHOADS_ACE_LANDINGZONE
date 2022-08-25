@@ -68,7 +68,7 @@ resource "azurerm_subnet" "websubnet" {
 }
 
 resource "azurerm_storage_account" "storage1" {
-    name = "grhoadsacelandingzonestorage"
+    name = "grhoadsacelzstorage"
     location = azurerm_resource_group.rg1.location
     resource_group_name = azurerm_resource_group.rg1.name
     account_tier = "Standard"
