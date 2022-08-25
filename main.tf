@@ -49,20 +49,20 @@ resource "azurerm_virtual_network" "vnet1" {
 resource "azurerm_subnet" "appsubnet" {
     name = "app-subnet"
     resource_group_name = azurerm_resource_group.rg1.name
-    virtual_network_name = azurerm_virtual_network.vnet1
+    virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.1.0/24" ]
 }
 
 resource "azurerm_subnet" "datasubnet" {
     name = "data-subnet"
     resource_group_name = azurerm_resource_group.rg1.name
-    virtual_network_name = azurerm_virtual_network.vnet1
+    virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.1.0/24" ]
 }
 
 resource "azurerm_subnet" "websubnet" {
     name = "web-subnet"
     resource_group_name = azurerm_resource_group.rg1.name
-    virtual_network_name = azurerm_virtual_network.vnet1
+    virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.1.0/24" ]
 }
