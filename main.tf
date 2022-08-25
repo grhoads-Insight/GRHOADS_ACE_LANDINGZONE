@@ -75,3 +75,16 @@ resource "azurerm_storage_account" "storage1" {
     account_replication_type = "GRS"
     account_kind = "StorageV2"
 }
+
+resource "azurerm_storage_container" "storagecontainer1" {
+    name = "grhoadsacelzcontainer"
+    storage_account_name = azurerm_storage_account.storage1.name
+    container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "storageblob1" {
+    name = "grhoadsacelzblob"
+    storage_account_name = azurerm_storage_account.storage1.name
+    storage_container_name = azurerm_storage_container.storagecontainer1.name
+    type = "Block"
+}
