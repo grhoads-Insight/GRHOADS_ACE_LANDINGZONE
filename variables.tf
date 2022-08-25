@@ -42,7 +42,7 @@ variable "keyvaultname" {
 variable "vnetname" {
     description = "name of virtual network"
     type = string
-    defualt = "landing-zone-network"
+    default = "landing-zone-network"
 }
 
 variable "subnet1name" {
