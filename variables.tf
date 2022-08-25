@@ -1,6 +1,7 @@
 variable "name" {
     description = "The Landing Zone name"
     type = string
+    default = "grhoads_capstone_lz"
 }
 
 variable "location" {
