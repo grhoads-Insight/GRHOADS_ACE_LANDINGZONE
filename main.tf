@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "rg2" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "keyvault1" {
-    name = "landing_zone_keyvault"
+    name = "landing-zone-keyvault"
     location = azurerm_resource_group.rg1.location
     resource_group_name = azurerm_resource_group.rg1.name
     enabled_for_disk_encryption = true
