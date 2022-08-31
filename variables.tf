@@ -6,6 +6,7 @@ variable "name" {
 
 variable "env" {
     description = "environment name"
+    type = string
     default = "dev"
 }
 
@@ -29,6 +30,7 @@ variable "rg1" {
 
 variable "rg2" {
     description = "The name of the workload resource group"
+    type = string
     default = "workload_rg"
 }
 

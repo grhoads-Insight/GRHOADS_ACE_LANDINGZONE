@@ -1,4 +1,8 @@
 terraform {
+
+  cloud {
+    organization = "insight"
+  }
   required_providers {
     azurerm = {
         source = "hashicorp/azurerm"

@@ -38,7 +38,6 @@ resource "azurerm_key_vault" "keyvault1" {
         ]
     }
 }
-
 resource "azurerm_virtual_network" "vnet1" {
     name = var.vnetname
     location = azurerm_resource_group.rg1.location
