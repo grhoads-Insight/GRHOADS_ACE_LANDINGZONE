@@ -4,6 +4,11 @@ variable "name" {
     default = "grhoads_capstone_lz"
 }
 
+variable "env" {
+    description = "environment name"
+    default = "dev"
+}
+
 variable "location" {
     description = "The location zone for Landing Zone resources"
     type = string
