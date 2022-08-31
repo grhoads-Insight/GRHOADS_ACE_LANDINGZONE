@@ -51,6 +51,15 @@ resource "azurerm_subnet" "appsubnet" {
     resource_group_name = azurerm_resource_group.rg1.name
     virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.1.0/24" ]
+
+    delegation {
+      name = "appsubnet-delegation"
+
+      service_delegation {
+        name = "Microsoft.Web/serverFarms"
+        actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      }
+    }
 }
 
 resource "azurerm_subnet" "datasubnet" {
@@ -58,6 +67,14 @@ resource "azurerm_subnet" "datasubnet" {
     resource_group_name = azurerm_resource_group.rg1.name
     virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.2.0/24" ]
+    delegation {
+      name = "appsubnet-delegation"
+
+      service_delegation {
+        name = "Microsoft.Web/serverFarms"
+        actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      }
+    }
 }
 
 resource "azurerm_subnet" "websubnet" {
@@ -65,6 +82,14 @@ resource "azurerm_subnet" "websubnet" {
     resource_group_name = azurerm_resource_group.rg1.name
     virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = [ "10.0.3.0/24" ]
+    delegation {
+      name = "appsubnet-delegation"
+
+      service_delegation {
+        name = "Microsoft.Web/serverFarms"
+        actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      }
+    }
 }
 
 resource "azurerm_storage_account" "storage1" {
