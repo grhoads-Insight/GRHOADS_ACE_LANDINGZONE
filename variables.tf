@@ -16,19 +16,19 @@ variable "location" {
   default     = "eastus2" #centralus redundant partner region
 }
 
-variable "location2" {
+variable "redundant_location" {
   description = "backup/redundant region for Landing Zone Resources"
   type        = string
   default     = "centralus"
 }
 
-variable "rg1" {
+variable "lz_rg_name" {
   description = "The name of the landing zone resource group"
   type        = string
   default     = "landing_zone_rg"
 }
 
-variable "rg2" {
+variable "wl_rg_name" {
   description = "The name of the workload resource group"
   type        = string
   default     = "workload_rg"
@@ -40,31 +40,31 @@ variable "tags" {
   default     = {}
 }
 
-variable "keyvaultname" {
+variable "keyvault_name" {
   description = "name of keyvault you would like, only numbers and dashes"
   type        = string
   default     = "landing-zone-keyvault"
 }
 
-variable "vnetname" {
+variable "vnet_name" {
   description = "name of virtual network"
   type        = string
   default     = "landing-zone-network"
 }
 
-variable "subnet1name" {
+variable "app_subnet_name" {
   description = "name of first subnet for app"
   type        = string
   default     = "app-subnet"
 }
 
-variable "subnet2name" {
+variable "data_subnet_name" {
   description = "name of first subnet for data"
   type        = string
   default     = "data-subnet"
 }
 
-variable "subnet3name" {
+variable "web_subnet_name" {
   description = "name of first subnet for web"
   type        = string
   default     = "web-subnet"
