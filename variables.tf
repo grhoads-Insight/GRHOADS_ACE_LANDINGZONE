@@ -6,8 +6,12 @@ variable "name" {
 
 variable "env" {
   description = "environment name"
-  type        = string
-  default     = "dev"
+  type        = map(string)
+  default = {
+    "dev"  = "dev"
+    "test" = "test"
+    "prod" = "prod"
+  }
 }
 
 variable "location" {
@@ -37,13 +41,16 @@ variable "wl_rg_name" {
 variable "tags" {
   description = "Additional tags to apply to resources"
   type        = map(string)
-  default     = {}
+  default = {
+    "Environment1" = "dev"
+    "Environment2" = "test"
+    "Environment3" = "prod"
+  }
 }
-
 variable "keyvault_name" {
   description = "name of keyvault you would like, only numbers and dashes"
   type        = string
-  default     = "landing-zone-keyvault"
+  default     = "grhoads-keyvault"
 }
 
 variable "vnet_name" {
@@ -73,17 +80,17 @@ variable "web_subnet_name" {
 variable "storage_account_name" {
   description = "name for the storage account in landing zone"
   type        = string
-  default     = "grhoadsacelzstorage"
+  default     = "grhoadslzstorage"
 }
 
 variable "storage_container_name" {
   description = "name for storage container"
   type        = string
-  default     = "grhoadsacelzcontainer"
+  default     = "grhoadslzcontainer"
 }
 
 variable "blob_storage_name" {
   description = "name for blob inside container"
   type        = string
-  default     = "grhoadsacelzblob"
+  default     = "grhoadslzblob"
 }

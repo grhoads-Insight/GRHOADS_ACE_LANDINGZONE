@@ -1,19 +1,25 @@
-resource "azurerm_resource_group" "landing_zone_rg" {
-  name     = var.lz_rg_name
+resource "azurerm_resource_group" "environment_rg" {
+  for_each = var.env
+  name     = "${each.value}-rg"
   location = var.location
+  tags = {
+    "Environment"   = "${each.value}"
+    "Resource Type" = "Landing Zone"
+  }
 }
 
-resource "azurerm_resource_group" "workload_rg" {
-  name     = var.wl_rg_name
-  location = var.location
-}
+# resource "azurerm_resource_group" "workload_rg" {
+#   name     = var.wl_rg_name
+#   location = var.location
+# }
 
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "keyvault1" {
-  name                        = var.keyvault_name
-  location                    = azurerm_resource_group.landing_zone_rg.location
-  resource_group_name         = azurerm_resource_group.landing_zone_rg.name
+  for_each                    = var.env
+  name                        = "${var.keyvault_name}-${each.value}"
+  location                    = azurerm_resource_group.environment_rg["${each.value}"].location
+  resource_group_name         = azurerm_resource_group.environment_rg["${each.value}"].name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
@@ -45,18 +51,28 @@ resource "azurerm_key_vault" "keyvault1" {
       "List",
     ]
   }
+  tags = {
+    "Environment"   = "${each.value}"
+    "Resource Type" = "Landing Zone"
+  }
 }
 resource "azurerm_virtual_network" "vnet1" {
-  name                = var.vnet_name
-  location            = azurerm_resource_group.landing_zone_rg.location
-  resource_group_name = azurerm_resource_group.landing_zone_rg.name
+  for_each            = var.env
+  name                = "${var.vnet_name}-${each.value}"
+  location            = azurerm_resource_group.environment_rg["${each.value}"].location
+  resource_group_name = azurerm_resource_group.environment_rg["${each.value}"].name
   address_space       = ["10.0.0.0/16"]
+  tags = {
+    "Environment"   = "${each.value}"
+    "Resource Type" = "Landing Zone"
+  }
 }
 
 resource "azurerm_subnet" "appsubnet" {
-  name                 = var.app_subnet_name
-  resource_group_name  = azurerm_resource_group.landing_zone_rg.name
-  virtual_network_name = azurerm_virtual_network.vnet1.name
+  for_each             = var.env
+  name                 = "${var.app_subnet_name}-${each.value}"
+  resource_group_name  = azurerm_resource_group.environment_rg["${each.value}"].name
+  virtual_network_name = azurerm_virtual_network.vnet1["${each.value}"].name
   address_prefixes     = ["10.0.1.0/24"]
 
   delegation {
@@ -70,9 +86,10 @@ resource "azurerm_subnet" "appsubnet" {
 }
 
 resource "azurerm_subnet" "datasubnet" {
-  name                 = var.data_subnet_name
-  resource_group_name  = azurerm_resource_group.landing_zone_rg.name
-  virtual_network_name = azurerm_virtual_network.vnet1.name
+  for_each             = var.env
+  name                 = "${var.data_subnet_name}-${each.value}"
+  resource_group_name  = azurerm_resource_group.environment_rg["${each.value}"].name
+  virtual_network_name = azurerm_virtual_network.vnet1["${each.value}"].name
   address_prefixes     = ["10.0.2.0/24"]
   delegation {
     name = "datasubnet-delegation"
@@ -85,9 +102,10 @@ resource "azurerm_subnet" "datasubnet" {
 }
 
 resource "azurerm_subnet" "websubnet" {
-  name                 = var.web_subnet_name
-  resource_group_name  = azurerm_resource_group.landing_zone_rg.name
-  virtual_network_name = azurerm_virtual_network.vnet1.name
+  for_each             = var.env
+  name                 = "${var.web_subnet_name}-${each.value}"
+  resource_group_name  = azurerm_resource_group.environment_rg["${each.value}"].name
+  virtual_network_name = azurerm_virtual_network.vnet1["${each.value}"].name
   address_prefixes     = ["10.0.3.0/24"]
   delegation {
     name = "websubnet-delegation"
@@ -100,23 +118,29 @@ resource "azurerm_subnet" "websubnet" {
 }
 
 resource "azurerm_storage_account" "storage1" {
-  name                     = var.storage_account_name
-  location                 = azurerm_resource_group.landing_zone_rg.location
-  resource_group_name      = azurerm_resource_group.landing_zone_rg.name
+  for_each                 = var.env
+  name                     = "${var.storage_account_name}${each.value}"
+  location                 = azurerm_resource_group.environment_rg["${each.value}"].location
+  resource_group_name      = azurerm_resource_group.environment_rg["${each.value}"].name
   account_tier             = "Standard"
   account_replication_type = "GRS"
-  account_kind             = "StorageV2"
+  tags = {
+    "Environment"   = "${each.value}"
+    "Resource Type" = "Landing Zone"
+  }
 }
 
 resource "azurerm_storage_container" "storagecontainer1" {
-  name                  = var.storage_container_name
-  storage_account_name  = azurerm_storage_account.storage1.name
+  for_each              = var.env
+  name                  = "${var.storage_container_name}-${each.value}"
+  storage_account_name  = azurerm_storage_account.storage1["${each.value}"].name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_blob" "storageblob1" {
-  name                   = var.blob_storage_name
-  storage_account_name   = azurerm_storage_account.storage1.name
-  storage_container_name = azurerm_storage_container.storagecontainer1.name
+  for_each               = var.env
+  name                   = "${var.blob_storage_name}-${each.value}"
+  storage_account_name   = azurerm_storage_account.storage1["${each.value}"].name
+  storage_container_name = azurerm_storage_container.storagecontainer1["${each.value}"].name
   type                   = "Block"
 }
