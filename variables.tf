@@ -20,7 +20,7 @@ variable "redundant_location" {
   default     = "centralus"
 }
 
-variable "wl_rg_name" {
+variable "rg_name" {
   description = "The name of the landing zone resource group"
   type        = string
   default     = "grhoads"
