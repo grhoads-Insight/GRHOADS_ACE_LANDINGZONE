@@ -1,9 +1,3 @@
-variable "name" {
-  description = "The Landing Zone name"
-  type        = string
-  default     = "grhoads_capstone_lz"
-}
-
 variable "env" {
   description = "environment name"
   type        = map(string)
@@ -26,26 +20,10 @@ variable "redundant_location" {
   default     = "centralus"
 }
 
-variable "lz_rg_name" {
+variable "wl_rg_name" {
   description = "The name of the landing zone resource group"
   type        = string
-  default     = "landing_zone_rg"
-}
-
-variable "wl_rg_name" {
-  description = "The name of the workload resource group"
-  type        = string
-  default     = "workload_rg"
-}
-
-variable "tags" {
-  description = "Additional tags to apply to resources"
-  type        = map(string)
-  default = {
-    "Environment1" = "dev"
-    "Environment2" = "test"
-    "Environment3" = "prod"
-  }
+  default     = "grhoads"
 }
 variable "keyvault_name" {
   description = "name of keyvault you would like, only numbers and dashes"
@@ -56,7 +34,7 @@ variable "keyvault_name" {
 variable "vnet_name" {
   description = "name of virtual network"
   type        = string
-  default     = "landing-zone-network"
+  default     = "grhoads-vnet"
 }
 
 variable "app_subnet_name" {

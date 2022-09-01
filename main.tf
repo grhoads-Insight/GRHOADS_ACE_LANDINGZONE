@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "environment_rg" {
   for_each = var.env
-  name     = "${each.value}-rg"
+  name     = "${var.rg_name}-rg-${each.value}"
   location = var.location
   tags = {
     "Environment"   = "${each.value}"
