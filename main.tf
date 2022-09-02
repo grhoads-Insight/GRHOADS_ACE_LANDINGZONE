@@ -8,11 +8,6 @@ resource "azurerm_resource_group" "environment_rg" {
   }
 }
 
-# resource "azurerm_resource_group" "workload_rg" {
-#   name     = var.wl_rg_name
-#   location = var.location
-# }
-
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "keyvault1" {
