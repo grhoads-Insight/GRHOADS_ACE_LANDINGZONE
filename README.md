@@ -1,6 +1,8 @@
 # GRHOADS_ACE_LANDINGZONE
 landing zone as part of the ACE Capstone project
 
+![azure-diagram](images/Azure-Diagram-grhoads.png)
+
 ## Requirements
 
 | Name | Version |
